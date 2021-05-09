@@ -18,7 +18,7 @@ namespace AutoPartsStore.ViewModel
 {
     class CategoriesViewModel : INotifyPropertyChanged
     {
-        public NewCategoryViewModel NewCategoryViewModel { get; set; }
+       
 
         private RelayCommand findCommand;
         public RelayCommand FindCommand
@@ -57,8 +57,6 @@ namespace AutoPartsStore.ViewModel
                 return addCategoryCommand ?? (addCategoryCommand = new RelayCommand(action =>
                 {
                     categoryАccess.AddCategory(mainViewModel.NewCategoryViewModel.Category);
-                    categories = null; 
-                    UpdateCategoryTree();
 
                 }, func =>
                 {
@@ -67,23 +65,7 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
-        private RelayCommand addMainCategoryCommand;
-        public RelayCommand AddMainCategoryCommand
-        {
-            get
-            {
-                return addMainCategoryCommand ?? (addMainCategoryCommand = new RelayCommand(action =>
-                {
-                    NewCategoryWindow newCategoryWindow = new NewCategoryWindow();
-                    newCategoryWindow.Show();
-                    Category parent = categoryАccess.GetCategoryById(1);
-                    mainViewModel.NewCategoryViewModel.Category = new Category(parent, "");
-                }, func =>
-                {
-                    return true;
-                }));
-            }
-        }
+    
 
         private RelayCommand addIntoCategoryCommand;
         public RelayCommand AddIntoCategoryCommand
@@ -97,6 +79,27 @@ namespace AutoPartsStore.ViewModel
                     newCategoryWindow.Show();
                     Category parent = categoryАccess.GetCategoryById((int)action);
                     mainViewModel.NewCategoryViewModel.Category = new Category(parent, "");
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+
+        
+
+        private RelayCommand renameCategoryCommand;
+        public RelayCommand RenameCategoryCommand
+        {
+            get
+            {
+                return renameCategoryCommand ?? (renameCategoryCommand = new RelayCommand(action =>
+                {
+                    //MessageBox.Show((int)action + " добавить в");
+                    NewCategoryWindow newCategoryWindow = new NewCategoryWindow();
+                    newCategoryWindow.Show();
+                    Category parent = categoryАccess.GetCategoryById((int)action);
+                    mainViewModel.NewCategoryViewModel.Category = categoryАccess.GetCategoryById((int)action);
                 }, func =>
                 {
                     return true;
@@ -133,7 +136,6 @@ namespace AutoPartsStore.ViewModel
                     /// сделать удаление всего
                     MessageBox.Show((int)action + "удалить");
                     categoryАccess.DeleteCategory((int)action);
-                    UpdateCategoryTree();
                 }, func =>
                 {
                     return true;
@@ -141,10 +143,6 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
-        private void UpdateCategoryTree()
-        {
-            Categories = categoryАccess.GetCategoryTree();
-        }
         protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value)) return false;
@@ -154,18 +152,7 @@ namespace AutoPartsStore.ViewModel
 
             return true;
         }
-        public ObservableCollection<Category> Categories
-        {
-            get
-            {
-                return categories;
-            }
-            set
-            {
-                //categories = value;
-                SetProperty(ref categories, value);
-            }
-        }
+
         private Category mainCategoryNode;
         public Category MainCategoryNode
         {
@@ -178,7 +165,6 @@ namespace AutoPartsStore.ViewModel
                 SetProperty(ref mainCategoryNode, value);
             }
         }
-        private ObservableCollection<Category> categories;
 
         CategoryАccess categoryАccess;
 
@@ -186,39 +172,12 @@ namespace AutoPartsStore.ViewModel
         public CategoriesViewModel()
         {
             categoryАccess = new CategoryАccess();
-            NewCategoryViewModel = new NewCategoryViewModel();
-            Categories = categoryАccess.GetCategoryTree();
+            
 
             mainViewModel = MainViewModel.GetMainViewModel();
             mainViewModel.CategoriesViewModel = this;
-            MainCategoryNode = categoryАccess.GetCategoryById(1);
 
-            //Category category1 = new Category("1", "Mоторное масло");
-            //Category category2 = new Category("2", "Система сцепления / навесные части", new ObservableCollection<Category>{ 
-            //    new Category("2.1", "Комплект сцепления"),
-            //    new Category("2.2", "Корзина"),
-            //    new Category("2.3", "Диск сцепления"),
-            //    new Category("2.4", "Система управление сцепления", new ObservableCollection<Category>{
-            //        new Category("2.4.1", "Цилиндр сцепления рабочий"),
-            //        new Category("2.4.2", "Накладка на педаль сцепления"),
-            //        new Category("2.4.3", "Обменный клапан"),
-            //    }),
-            //});
-            //Category category3 = new Category("2", "Система сцепления / навесные части", new ObservableCollection<Category>{
-            //    new Category("2.1", "Комплект сцепления"),
-            //    new Category("2.2", "Корзина", new ObservableCollection<Category>{
-            //        new Category("2.4.1", "Цилиндр сцепления рабочий"),
-            //        new Category("2.4.2", "Накладка на педаль сцепления"),
-            //        new Category("2.4.3", "Обменный клапан"),
-            //    }),
-            //    new Category("2.3", "Диск сцепления"),
-            //    new Category("2.4", "Система управление сцепления"),
-            //});
-
-            //categories = new ObservableCollection<Category> { 
-            //    category1, category2, category3
-            //};
-
+            MainCategoryNode = categoryАccess.GetMainCategory();
         }
 
        

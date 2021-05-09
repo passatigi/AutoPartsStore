@@ -26,21 +26,22 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="127*"/>
             <ColumnDefinition Width="766*"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+
+        <Grid Grid.Row="1" >
             <ScrollViewer>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="270"></ColumnDefinition>
-                        <ColumnDefinition Width="600"></ColumnDefinition>
+                        <ColumnDefinition Width="3*" MinWidth="270" MaxWidth="350"></ColumnDefinition>
+                        <ColumnDefinition  Width="7*" MinWidth="500" MaxWidth="800"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1" x:Name="CategoriesTree" DataContext="{Binding Source={StaticResource CategoriesViewModel}}">
@@ -54,8 +55,8 @@
                                     <StackPanel Orientation="Horizontal">
                                             <TextBox Width="220"  Padding="10" Style="{DynamicResource TextboxNoBorder}" Text="{Binding InputCategoryString}"/>
                                         <Button VerticalAlignment="Top" Margin="5" Width="30" Height="30" Style="{DynamicResource BuyButtonStyle}"
-                                                Command="{Binding AddMainCategoryCommand}"
-                                                >
+                                                Command="{Binding AddIntoCategoryCommand}"
+                                                CommandParameter="{Binding MainCategoryNode.CategoryId}">
                                             <TextBlock Text="+"/>
                                         </Button>
                                     </StackPanel>
@@ -80,6 +81,13 @@
                                                             </MenuItem>
                                                 <MenuItem Header="{DynamicResource AddWithCategoryMenuItemText}"  
                                                           Command="{Binding Source={StaticResource MainWindowViewModel}, Path=AddWithCategoryCommand}" 
+                                                          CommandParameter="{Binding CategoryId}">
+                                                    <MenuItem.Icon>
+                                                        <Image Source="{DynamicResource BuyBascetIcon}" />
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="{DynamicResource RenameCategoryMenuItemText}"  
+                                                          Command="{Binding Source={StaticResource MainWindowViewModel}, Path=RenameCategoryCommand}" 
                                                           CommandParameter="{Binding CategoryId}">
                                                     <MenuItem.Icon>
                                                         <Image Source="{DynamicResource BuyBascetIcon}" />
@@ -111,14 +119,18 @@
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2" DataContext="{Binding Source={StaticResource ProductViewModel}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="47*"/>
-                            <ColumnDefinition Width="13*"/>
-                        </Grid.ColumnDefinitions>
-                        <ItemsControl  x:Name="productsList" ItemsSource="{Binding Products}" MinWidth="400" Grid.ColumnSpan="2">
+                        <Grid Margin="10 10 0 10">
+                            <Border>
+                        <!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>-->
+                                <!--MinWidth="400"-->
+                        <ItemsControl  x:Name="productsList" ItemsSource="{Binding Products}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Background="White" MinHeight="200" MaxHeight="600" MinWidth="400" MaxWidth="600" Margin="10">
+                                    <!--MinWidth="400" MaxWidth="600"-->
+                                    <Grid Background="White" MinHeight="200" MaxHeight="600" Margin="10, 0, 0, 15">
                                         <Grid.Effect>
                                             <DropShadowEffect Opacity="0.2" ShadowDepth="0" BlurRadius="20"></DropShadowEffect>
                                         </Grid.Effect>
@@ -197,7 +209,7 @@
                                                         <Button Style="{DynamicResource ButtonStyleSelectProductCount}" Grid.Column="2" Content="&gt;"/>
                                                     </Grid>
                                                 </Border>
-                                                <Button Margin="5" Grid.Row="3" Width="100" Height="30" Style="{DynamicResource BuyButtonStyle}">
+                                                <Button Margin="5" Grid.Row="3" MinWidth="70" MaxWidth="150"  Style="{DynamicResource BuyButtonStyle}">
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image HorizontalAlignment="Right" Grid.Column="0"
                         x:Name="buttonImage" Width="12" Height="12" Source="{DynamicResource BuyBascetIcon}"/>
@@ -214,6 +226,8 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                            </Border>
+                        </Grid>
                     </Grid>
                 </Grid>
             </ScrollViewer>

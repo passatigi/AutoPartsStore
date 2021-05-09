@@ -3,6 +3,7 @@ using AutoPartsStore.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,35 +18,39 @@ namespace AutoPartsStore.BusinessLayer
 
         Category GetCategoryById(int categoryId);
 
-        ObservableCollection<Category> GetCategoryTree();
+        List<Category> GetAllCategories();
+
     }
     class CategoryАccess : ICategoryАccess
     {
         AutoPartsStoreContext db;
 
         List<Category> categories;
-        ObservableCollection<Category> categoriesTree;
+
 
         public CategoryАccess()
         {
             
             db = AutoPartsStoreContext.GetStoreContext();
             //db.Database.Delete();
-            if (db.Categories.Where(c => c.CategoryId == 1).FirstOrDefault() == null)
+            if (db.Categories.Where(c => c.CategoryLevel == 0).FirstOrDefault() == null)
             {
                 Category topCategory = new Category(null, "Top category");
-                topCategory.CategoryId = 1;
                 topCategory.CategoryLevel = 0;
                 db.Categories.Add(topCategory);
                 db.SaveChanges();
+                
             }
-            categoriesTree = new ObservableCollection<Category>();
             UpdateCategoryInfo();
         } 
         public void UpdateCategoryInfo()
         {
             categories = db.Categories.ToList();
-            categoriesTree = GetCategoryTree();
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            return categories;
         }
 
         public void AddCategory(Category category)
@@ -77,6 +82,9 @@ namespace AutoPartsStore.BusinessLayer
                 throw new Exception("Category is null");
             }
             db.Categories.Remove(category);
+            IEnumerable<Category> removeCategories = db.Categories.Where(c => c.ParentCategory == null && c.CategoryLevel != 0).AsEnumerable();
+            db.Categories.RemoveRange(removeCategories);
+
             db.SaveChanges();
             UpdateCategoryInfo();
             return category;
@@ -88,8 +96,7 @@ namespace AutoPartsStore.BusinessLayer
             {
                 throw new Exception("Category is null");
             }
-            db.Categories.Remove(category);
-            db.Categories.Add(newCategory);
+            category.Name = newCategory.Name;
             db.SaveChanges();
             UpdateCategoryInfo();
             return newCategory;
@@ -98,16 +105,9 @@ namespace AutoPartsStore.BusinessLayer
         {
             return categories.Where(c => c.CategoryId.Equals(categoryId)).FirstOrDefault();
         }
-
-        public ObservableCollection<Category> GetCategoryTree()
+        public Category GetMainCategory()
         {
-            List<Category> firstLevelCategories = categories.Where(c => c.CategoryLevel == 1).ToList();
-            categoriesTree.Clear();
-            foreach (Category category in firstLevelCategories)
-            {
-                categoriesTree.Add(category);
-            }
-            return categoriesTree;
+            return GetCategoryById(db.Categories.Where(c => c.CategoryLevel == 0).FirstOrDefault().CategoryId);
         }
 
     }

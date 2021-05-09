@@ -51,7 +51,6 @@ namespace AutoPartsStore.ViewModel
         {
             mainViewModel = MainViewModel.GetMainViewModel();
             mainViewModel.NewCategoryViewModel = this;
-            MainViewModel.GetMainViewModel().NewCategoryViewModel = this;
         }
 
     }

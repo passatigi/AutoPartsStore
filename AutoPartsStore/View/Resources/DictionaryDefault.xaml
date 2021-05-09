@@ -14,6 +14,7 @@
     <sys:String x:Key="NewCategoryWindowTitle">Добавить категорию</sys:String>
     <sys:String x:Key="AddIntoCategoryMenuItemText">Добавить в эту категорию</sys:String>
     <sys:String x:Key="AddWithCategoryMenuItemText">Добавить к этой категории</sys:String>
+    <sys:String x:Key="RenameCategoryMenuItemText">Переименовать категорию</sys:String>
     <sys:String x:Key="DeleteCategoryMenuItemText">Удалить категорию</sys:String>
     <sys:String x:Key="NewCategoryTipLabel">Добавить категорию в </sys:String>
     
