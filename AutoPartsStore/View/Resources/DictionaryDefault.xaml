@@ -1,15 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:AutoPartsStore.View.Resources"
-
                     xmlns:vm="clr-namespace:AutoPartsStore.ViewModel"
-                    
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:m="clr-namespace:AutoPartsStore.Model">
 
     <vm:CategoriesViewModel x:Key="CategoriesViewModel"/>
     <vm:ProductViewModel x:Key="ProductViewModel"/>
     <vm:NewCategoryViewModel x:Key="NewCategoryViewModel"/>
+    <vm:NewCarViewModel x:Key="NewCarViewModel"/>
+    
     <ObjectDataProvider x:Key="MainWindowViewModel" ObjectType="{x:Type vm:CategoriesViewModel}" IsAsynchronous="True"/>
     <sys:String x:Key="NewCategoryWindowTitle">Добавить категорию</sys:String>
     <sys:String x:Key="AddIntoCategoryMenuItemText">Добавить в эту категорию</sys:String>
@@ -21,6 +21,7 @@
     
 
     <SolidColorBrush x:Key="ItemBackGround" Color="#F4F4F4"></SolidColorBrush>
+    <SolidColorBrush x:Key="SecondItemBackGround" Color="white"></SolidColorBrush>
     <SolidColorBrush x:Key="RedButtonColor" Color="#D70000"></SolidColorBrush>
     <SolidColorBrush x:Key="RedButtonColorOnMouseOver" Color="#f75e5e"></SolidColorBrush>
     <SolidColorBrush x:Key="RedButtonColorOnClick" Color="#911717"></SolidColorBrush>

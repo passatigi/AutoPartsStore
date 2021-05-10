@@ -18,7 +18,20 @@ namespace AutoPartsStore.ViewModel
 {
     class CategoriesViewModel : INotifyPropertyChanged
     {
-       
+        
+        private string inputCategoryString;
+        public string InputCategoryString
+        {
+            get
+            {
+                return inputCategoryString;
+            }
+            set
+            {
+                inputCategoryString = value;
+                NotifyPropertyChanged("InputCategoryString");
+            }
+        }
 
         private RelayCommand findCommand;
         public RelayCommand FindCommand
@@ -36,19 +49,7 @@ namespace AutoPartsStore.ViewModel
                 }));
             }
         }
-        private string inputCategoryString;
-        public string InputCategoryString
-        {
-            get
-            {
-                return inputCategoryString;
-            }
-            set
-            {
-                inputCategoryString = value;
-                NotifyPropertyChanged("InputCategoryString");
-            }
-        }
+
         private RelayCommand addCategoryCommand;
         public RelayCommand AddCategoryCommand
         {

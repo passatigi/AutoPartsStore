@@ -11,14 +11,22 @@ namespace AutoPartsStore.Model.Vehicle
 
         private long id;
         private float volume;
+        // бенз не бенз
         private string modification;
         private short power;
         private string modelCode;
-        private short releaseStart;
-        private short releaseEnd;
-        
+        private string releaseStart;
+        private string releaseEnd;
+
+        public override string ToString()
+        {
+            return $"{volume} ({power} л.с.) ({releaseStart} - {releaseEnd}) ({modelCode})";
+        }
+
         public VehicleModification VehicleModification { get; set; }
 
+        #region Properties
+        
         public long Id
         {
             get
@@ -82,7 +90,7 @@ namespace AutoPartsStore.Model.Vehicle
             }
         }
 
-        public short ReleaseStart
+        public string ReleaseStart
         {
             get
             {
@@ -94,7 +102,7 @@ namespace AutoPartsStore.Model.Vehicle
             }
         }
 
-        public short ReleaseEnd
+        public string ReleaseEnd
         {
             get
             {
@@ -105,5 +113,6 @@ namespace AutoPartsStore.Model.Vehicle
                 SetProperty(ref releaseEnd, value);
             }
         }
+        #endregion
     }
 }

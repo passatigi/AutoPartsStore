@@ -10,10 +10,24 @@ namespace AutoPartsStore.Model.Vehicle
 
     public class Vehicle : BasicModel
     {
+        public Vehicle()
+        {
+
+        }
+        public Vehicle(string brand)
+        {
+            this.Brand = brand;
+        }
         private long id;
         private string brand;
         private ObservableCollection<VehicleModification> vehicleModifications;
-        
+
+        public override string ToString()
+        {
+            return brand;
+        }
+
+        #region Properties
 
         public long Id
         {
@@ -49,5 +63,7 @@ namespace AutoPartsStore.Model.Vehicle
                 SetProperty(ref vehicleModifications, value);
             }
         }
+
+        #endregion
     }
 }
