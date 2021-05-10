@@ -32,7 +32,6 @@ namespace AutoPartsStore.BusinessLayer
         {
             
             db = AutoPartsStoreContext.GetStoreContext();
-            //db.Database.Delete();
             if (db.Categories.Where(c => c.CategoryLevel == 0).FirstOrDefault() == null)
             {
                 Category topCategory = new Category(null, "Top category");

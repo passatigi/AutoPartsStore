@@ -14,7 +14,7 @@ namespace AutoPartsStore.Model
     {
         public long id { get; set; }
         public string VendorCodeString { get; set; }
-        public ObservableCollection<OEMNumber> NumbersOEM { get; set; }
+        public ObservableCollection<VendorCodeOEMNumbers> NumbersOEM { get; set; }
 
     } 
 }

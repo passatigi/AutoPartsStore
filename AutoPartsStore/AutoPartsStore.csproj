@@ -75,10 +75,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddCarWindow.xaml.cs">
+      <DependentUpon>AddCarWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BusinessLayer\CategoryАccess.cs" />
     <Compile Include="DataBaseConnector\AutoPartsStoreContext.cs" />
+    <Compile Include="Model\BasicModel.cs" />
     <Compile Include="Model\Manufacturer.cs" />
-    <Compile Include="Model\OEMNumber.cs" />
+    <Compile Include="Model\Vehicle\ConcretVehiclePartOemNumber.cs" />
+    <Compile Include="Model\VendorCodeOEMNumbers.cs" />
+    <Compile Include="Model\Vehicle\Vehicle.cs" />
+    <Compile Include="Model\Vehicle\VehicleEngine.cs" />
+    <Compile Include="Model\Vehicle\VehicleModification.cs" />
+    <Compile Include="Model\Vehicle\VehiclePart.cs" />
     <Compile Include="Model\VendorCode.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CategoriesViewModel.cs" />
@@ -91,6 +100,10 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddCarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

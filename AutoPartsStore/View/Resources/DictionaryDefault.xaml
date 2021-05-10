@@ -24,6 +24,7 @@
     <SolidColorBrush x:Key="RedButtonColor" Color="#D70000"></SolidColorBrush>
     <SolidColorBrush x:Key="RedButtonColorOnMouseOver" Color="#f75e5e"></SolidColorBrush>
     <SolidColorBrush x:Key="RedButtonColorOnClick" Color="#911717"></SolidColorBrush>
+    <SolidColorBrush x:Key="RedButtonTextColor" Color="white"></SolidColorBrush>
 
     <Style x:Key="RedButtonTextStyle">
         <Setter Property="Control.FontSize" Value="10"/>
@@ -63,7 +64,7 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource RedButtonTextColor}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
