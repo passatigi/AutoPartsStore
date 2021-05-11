@@ -25,8 +25,13 @@ namespace AutoPartsStore.BusinessLayer
         }
         public IEnumerable<VehicleModification> GetAllVehicleBrandMofications(Vehicle vehicle)
         {
-            return db.VehicleModifications.Where(wm => wm.Vehicle.Brand == vehicle.Brand).AsEnumerable();
+            return db.VehicleModifications.Where(wm => wm.Vehicle.Brand.Equals(vehicle.Brand)).AsEnumerable();
         }
+        public IEnumerable<VehicleEngine> GetAllVehicleModificationEngines(VehicleModification vehicleModification)
+        {
+            return db.VehicleEngines.Where(we => we.VehicleModification.Model.Equals(vehicleModification.Model)).AsEnumerable();
+        }
+
         public void AddVehicleBrand(Vehicle vehicle)
         {
             db.Vehicles.Add(vehicle);
@@ -35,6 +40,11 @@ namespace AutoPartsStore.BusinessLayer
         public void AddVehicleModification(VehicleModification vehicleModification)
         {
             db.VehicleModifications.Add(vehicleModification);
+            db.SaveChanges();
+        }
+        public void AddVehicleEngine(VehicleEngine vehicleEngine)
+        {
+            db.VehicleEngines.Add(vehicleEngine);
             db.SaveChanges();
         }
 

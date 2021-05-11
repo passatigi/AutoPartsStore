@@ -20,6 +20,28 @@ namespace AutoPartsStore.ViewModel
         private VehicleEngine selectedVehicleEngine;
 
         #region CurrentVehicleProperties
+        public VehicleEngine SelectedVehicleEngine
+        {
+            get
+            {
+                return selectedVehicleEngine;
+            }
+            set
+            {
+                SetProperty(ref selectedVehicleEngine, value);
+                
+                if (SelectedVehicleEngine != null)
+                {
+                    SelectedVehicleEngine.Volume = SelectedVehicleEngine.Volume;
+                    SelectedVehicleEngine.Modification = SelectedVehicleEngine.Modification;
+                    SelectedVehicleEngine.Power = SelectedVehicleEngine.Power;
+                    SelectedVehicleEngine.ModelCode = SelectedVehicleEngine.ModelCode;
+                    SelectedVehicleEngine.ReleaseStart = SelectedVehicleEngine.ReleaseStart;
+                    SelectedVehicleEngine.ReleaseEnd = SelectedVehicleEngine.ReleaseEnd;
+                }
+            }
+        }
+
         public Vehicle SelectedVehicleBrand
         {
             get
@@ -49,14 +71,16 @@ namespace AutoPartsStore.ViewModel
                     SelectedVehicleModification.ReleaseStart = SelectedVehicleModification.ReleaseStart;
                     SelectedVehicleModification.ReleaseEnd = SelectedVehicleModification.ReleaseEnd;
                 }
-                
+                FillVehicleEngine();
+
             }
         }
         #endregion
 
-        
+
 
         #region commands
+        
 
         private RelayCommand addPropertyCommand;
         public RelayCommand AddPropertyCommand
@@ -184,6 +208,136 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
+        private RelayCommand addEnginePropertyCommand;
+        public RelayCommand AddEnginePropertyCommand
+        {
+            get
+            {
+                return addEnginePropertyCommand ?? (addEnginePropertyCommand = new RelayCommand(action =>
+                {
+                    if(selectedVehicleEngine == null)
+                    {
+                        selectedVehicleEngine = new VehicleEngine();
+                    }
+                    if (action is ObservableCollection<string>)
+                    {
+                        ObservableCollection<string> engineProp = (ObservableCollection<string>)action;
+                        if(engineProp == vehicleEngineModifications)
+                        {
+                            engineProp.Add(addTextEngineModification);
+                            selectedVehicleEngine.Modification = addTextEngineModification;
+                        }
+                        else if (engineProp == vehicleEngineModelCodes)
+                        {
+                            engineProp.Add(addTextEngineModelCode);
+                            selectedVehicleEngine.ModelCode = addTextEngineModelCode;
+                        }
+                        else if (engineProp == vehicleEngineReleaseStarts)
+                        {
+                            engineProp.Add(addTextEngineReleaseStart);
+                            selectedVehicleEngine.ReleaseStart = addTextEngineReleaseStart;
+                        }
+                        else if (engineProp == vehicleEngineReleaseEnds)
+                        {
+                            engineProp.Add(addTextEngineReleaseEnd);
+                            selectedVehicleEngine.ReleaseEnd = addTextEngineReleaseEnd;
+                        }
+                    }
+                    else if(action is ObservableCollection<float>)
+                    {
+                        ObservableCollection<float> engineProp = (ObservableCollection<float>)action;
+                        if (engineProp == vehicleEngineVolumes)
+                        {
+                            engineProp.Add(addTextEngineVolume);
+                            selectedVehicleEngine.Volume = addTextEngineVolume;
+                        }
+                    }
+                    else if(action is ObservableCollection<short>)
+                    {
+                        ObservableCollection<short> engineProp = (ObservableCollection<short>)action;
+                        if (engineProp == vehicleEnginePowers)
+                        {
+                            engineProp.Add(addTextEnginePower);
+                            selectedVehicleEngine.Power = addTextEnginePower;
+                        }
+                    }
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+
+        private RelayCommand deleteEngineCommnand;
+        public RelayCommand DeleteEngineCommnand
+        {
+            get
+            {
+                return deleteEngineCommnand ?? (deleteEngineCommnand = new RelayCommand(action =>
+                {
+                    vehicleAccess.DeleteVehicleModification(selectedVehicleModification);
+                    vehicleModifications.Remove(selectedVehicleModification);
+
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+
+        
+        private RelayCommand addVehicleEngineCommnand;
+        public RelayCommand AddVehicleEngineCommnand
+        {
+            get
+            {
+                return addVehicleEngineCommnand ?? (addVehicleEngineCommnand = new RelayCommand(action =>
+                {
+
+                    //if (SelectedVehicleModification.Model == null)
+                    //{
+                    //    SelectedVehicleModification.Model = addTextModificationModel;
+                    //}
+                    //if (SelectedVehicleModification.ModelCode == null)
+                    //{
+
+                    //    SelectedVehicleModification.ModelCode = addTextModificationModelCode;
+                    //}
+                    //if (SelectedVehicleModification.ReleaseStart == null)
+                    //{
+
+                    //    SelectedVehicleModification.ReleaseStart = addTextModificationReleaseStart;
+                    //}
+                    //if (SelectedVehicleModification.ReleaseEnd == null)
+                    //{
+
+                    //    SelectedVehicleModification.ReleaseEnd = addTextModificationReleaseEnd;
+                    //}
+
+                    if (SelectedVehicleEngine.Volume == 0 || SelectedVehicleEngine.Power == 0 ||
+                    SelectedVehicleEngine.Modification == null || SelectedVehicleEngine.Modification == "" ||
+                    SelectedVehicleEngine.ModelCode == null || SelectedVehicleEngine.ModelCode == "" ||
+                    SelectedVehicleEngine.ReleaseStart == null || SelectedVehicleEngine.ReleaseStart == "" ||
+                    SelectedVehicleEngine.ReleaseEnd == null || SelectedVehicleEngine.ReleaseEnd == "")
+                    {
+                        MessageBox.Show("Заполните двигатель");
+                    }
+                    else
+                    {
+                        VehicleEngine newVehicleEngine = new VehicleEngine(
+                            SelectedVehicleModification, selectedVehicleEngine
+                            );
+                        vehicleAccess.AddVehicleEngine(newVehicleEngine);
+                        VehicleEngines.Add(newVehicleEngine);
+                        selectedVehicleEngine = newVehicleEngine;
+                    }
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+
         #endregion
 
         VehicleAccess vehicleAccess;
@@ -199,9 +353,11 @@ namespace AutoPartsStore.ViewModel
 
             selectedVehicleBrand = new Vehicle();
             selectedVehicleModification = new VehicleModification();
+            selectedVehicleEngine = new VehicleEngine();
 
             vehicleBrands = new ObservableCollection<Vehicle>();
             vehicleModifications = new ObservableCollection<VehicleModification>();
+            vehicleEngines = new ObservableCollection<VehicleEngine>();
 
             vehicleModificationModels = new ObservableCollection<string>();
             vehicleModificationModelCodes = new ObservableCollection<string>();
@@ -209,12 +365,18 @@ namespace AutoPartsStore.ViewModel
             vehicleModificationReleaseEnds = new ObservableCollection<string>();
 
 
-            
+            vehicleEngineVolumes = new ObservableCollection<float>();
+            vehicleEngineModifications = new ObservableCollection<string>();
+            vehicleEnginePowers = new ObservableCollection<short>();
+            vehicleEngineModelCodes = new ObservableCollection<string>();
+            vehicleEngineReleaseStarts = new ObservableCollection<string>();
+            vehicleEngineReleaseEnds = new ObservableCollection<string>();
 
-            //VehicleModification vm1 = new VehicleModification("Sierra", "GBC", "1987", "1990");
-            //VehicleModification vm2 = new VehicleModification("Sierra", "GBN", "1990", "1993");
-            //vehicleModifications.Add(vm1);
-            //vehicleModifications.Add(vm2);
+
+        //VehicleModification vm1 = new VehicleModification("Sierra", "GBC", "1987", "1990");
+        //VehicleModification vm2 = new VehicleModification("Sierra", "GBN", "1990", "1993");
+        //vehicleModifications.Add(vm1);
+        //vehicleModifications.Add(vm2);
 
             //VehicleModificationModels.Add(vm1.Model);
             //VehicleModificationModels.Add(vm2.Model);
@@ -230,9 +392,10 @@ namespace AutoPartsStore.ViewModel
                 vehicleBrands.Add(vehicleBrand);
             }
         }
+
         private void FillVehicleModifications()
         {
-            vehicleModifications.Clear();
+            
             vehicleModifications.Clear();
             vehicleModificationModels.Clear();
             vehicleModificationModelCodes.Clear();
@@ -251,10 +414,35 @@ namespace AutoPartsStore.ViewModel
                 selectedVehicleModification = new VehicleModification();
             }
         }
-         
 
-        
-       
+        private void FillVehicleEngine()
+        {
+            vehicleEngines.Clear();
+            vehicleEngineVolumes.Clear();
+            vehicleEngineModifications.Clear();
+            vehicleEnginePowers.Clear();
+            vehicleEngineModelCodes.Clear();
+            vehicleEngineReleaseStarts.Clear();
+            vehicleEngineReleaseEnds.Clear();
+            if (selectedVehicleModification != null) {
+            foreach (VehicleEngine vehicleEngine in vehicleAccess.GetAllVehicleModificationEngines(selectedVehicleModification))
+            {
+                vehicleEngines.Add(vehicleEngine);
+                vehicleEngineVolumes.Add(vehicleEngine.Power);
+                vehicleEngineModifications.Add(vehicleEngine.Modification);
+                vehicleEnginePowers.Add(vehicleEngine.Power);
+                vehicleEngineModelCodes.Add(vehicleEngine.ModelCode);
+                vehicleEngineReleaseStarts.Add(vehicleEngine.ReleaseStart);
+                vehicleEngineReleaseEnds.Add(vehicleEngine.ReleaseEnd);
+            }
+            }
+            if (vehicleEngines.Count == 0)
+            {
+                selectedVehicleEngine = new VehicleEngine();
+            }
+        }
+
+
 
 
         private string addTextVehicleBrand;
@@ -276,6 +464,7 @@ namespace AutoPartsStore.ViewModel
         private string addTextEngineModelCode;
         private string addTextEngineReleaseStart;
         private string addTextEngineReleaseEnd;
+
         public float AddTextEngineVolume { get => addTextEngineVolume; set => addTextEngineVolume = value; }
         public string AddTextEngineModification { get => addTextEngineModification; set => addTextEngineModification = value; }
         public short AddTextEnginePower { get => addTextEnginePower; set => addTextEnginePower = value; }
@@ -353,6 +542,7 @@ namespace AutoPartsStore.ViewModel
 
         private ObservableCollection<Vehicle> vehicleBrands;
 
+
         private ObservableCollection<string> vehicleModificationModels;
 
         private ObservableCollection<string> vehicleModificationModelCodes;
@@ -362,6 +552,18 @@ namespace AutoPartsStore.ViewModel
         private ObservableCollection<string> vehicleModificationReleaseEnds;
 
 
+
+        private ObservableCollection<float> vehicleEngineVolumes;
+
+        private ObservableCollection<string> vehicleEngineModifications;
+
+        private ObservableCollection<short> vehicleEnginePowers;
+
+        private ObservableCollection<string> vehicleEngineModelCodes;
+
+        private ObservableCollection<string> vehicleEngineReleaseStarts;
+
+        private ObservableCollection<string> vehicleEngineReleaseEnds;
 
 
         #region ComboboxCollections 
@@ -446,7 +648,14 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
-        
+        public ObservableCollection<float> VehicleEngineVolumes { get => vehicleEngineVolumes; set => vehicleEngineVolumes = value; }
+        public ObservableCollection<string> VehicleEngineModifications { get => vehicleEngineModifications; set => vehicleEngineModifications = value; }
+        public ObservableCollection<short> VehicleEnginePowers { get => vehicleEnginePowers; set => vehicleEnginePowers = value; }
+        public ObservableCollection<string> VehicleEngineModelCodes { get => vehicleEngineModelCodes; set => vehicleEngineModelCodes = value; }
+        public ObservableCollection<string> VehicleEngineReleaseStarts { get => vehicleEngineReleaseStarts; set => vehicleEngineReleaseStarts = value; }
+        public ObservableCollection<string> VehicleEngineReleaseEnds { get => vehicleEngineReleaseEnds; set => vehicleEngineReleaseEnds = value; }
+
+
         #endregion
 
 

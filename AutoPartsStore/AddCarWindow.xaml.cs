@@ -24,14 +24,6 @@ namespace AutoPartsStore
             InitializeComponent();
         }
 
-        //private void CarBrandName_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
 
-        //}
-
-        //private void CarModification_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-
-        //}
     }
 }

@@ -17,13 +17,30 @@ namespace AutoPartsStore.Model.Vehicle
         private string modelCode;
         private string releaseStart;
         private string releaseEnd;
+        public VehicleModification VehicleModification { get; set; }
+        public VehicleEngine()
+        {
+
+        }
+        public VehicleEngine(VehicleModification vehicleModification, VehicleEngine vehicleEngine)
+        {
+            this.VehicleModification = vehicleModification;
+            this.volume = vehicleEngine.volume;
+            this.modification = vehicleEngine.modification;
+            this.power = vehicleEngine.power;
+            this.modelCode = vehicleEngine.modelCode;
+            this.releaseStart = vehicleEngine.releaseStart;
+            this.releaseEnd = vehicleEngine.releaseEnd;
+        }
+
+
 
         public override string ToString()
         {
             return $"{volume} ({power} л.с.) ({releaseStart} - {releaseEnd}) ({modelCode})";
         }
 
-        public VehicleModification VehicleModification { get; set; }
+        
 
         #region Properties
         
