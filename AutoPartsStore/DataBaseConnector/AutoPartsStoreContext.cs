@@ -10,26 +10,14 @@ using AutoPartsStore.Model.Vehicle;
 
 namespace AutoPartsStore.DataBaseConnector
 {
-    class AutoPartsStoreContext : DbContext
+    public class AutoPartsStoreContext : DbContext
     {
-        private static AutoPartsStoreContext autoPartsStoreContext;
-        private static object syncRoot = new Object();
-        protected AutoPartsStoreContext() : base("DefaultConnection")
+        
+        public AutoPartsStoreContext() : base("DefaultConnection")
         {
 
         }
-        public static AutoPartsStoreContext GetStoreContext()
-        {
-            if (autoPartsStoreContext == null)
-            {
-                lock (syncRoot)
-                {
-                    if (autoPartsStoreContext == null)
-                        autoPartsStoreContext = new AutoPartsStoreContext();
-                }
-            }
-            return autoPartsStoreContext;
-        }
+        
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }

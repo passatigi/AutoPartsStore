@@ -16,7 +16,11 @@ namespace AutoPartsStore.Model.Vehicle
         private VehicleModification vehicleModification;
         private VehicleEngine vehicleEngine;
 
+        private List<ConcretVehiclePartOemNumber> concretVehiclePartOemNumbers;
 
+        private Category category;
+
+        #region properties
         public Vehicle Vehicle
         {
             get
@@ -51,12 +55,6 @@ namespace AutoPartsStore.Model.Vehicle
             }
         }
 
-
-
-
-        private List<ConcretVehiclePartOemNumber> concretVehiclePartOemNumbers;
-
-      
         public List<ConcretVehiclePartOemNumber> ConcretVehiclePartOemNumbers
         {
             get
@@ -69,7 +67,6 @@ namespace AutoPartsStore.Model.Vehicle
             }
         }
 
-        private Category category;
         public Category Category
         {
             get
@@ -81,6 +78,8 @@ namespace AutoPartsStore.Model.Vehicle
                 SetProperty(ref category, value);
             }
         }
+
+        #endregion
 
     }
 

@@ -55,6 +55,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -76,12 +77,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddCarWindow.xaml.cs">
-      <DependentUpon>AddCarWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BusinessLayer\CategoryАccess.cs" />
     <Compile Include="BusinessLayer\VehicleAccess.cs" />
     <Compile Include="DataBaseConnector\AutoPartsStoreContext.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\CategoryRepository.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\IRepository.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\StoreUnitOfWork.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\VehicleEngineRepository.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\VehicleModificationRepository.cs" />
+    <Compile Include="DataBaseConnector\UnitOfWork\VehicleRepository.cs" />
     <Compile Include="Model\BasicModel.cs" />
     <Compile Include="Model\Manufacturer.cs" />
     <Compile Include="Model\Vehicle\ConcretVehiclePartOemNumber.cs" />
@@ -91,23 +95,49 @@
     <Compile Include="Model\Vehicle\VehicleModification.cs" />
     <Compile Include="Model\Vehicle\VehiclePart.cs" />
     <Compile Include="Model\VendorCode.cs" />
+    <Compile Include="ViewModel\AddOemToCarCategoryViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CategoriesViewModel.cs" />
+    <Compile Include="ViewModel\ChooseCarViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NewCarViewModel.cs" />
     <Compile Include="ViewModel\NewCategoryViewModel.cs" />
     <Compile Include="ViewModel\ProductViewModel.cs" />
+    <Compile Include="View\AddNewCarPage.xaml.cs">
+      <DependentUpon>AddNewCarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddOemToCarCategoryWindow.xaml.cs">
+      <DependentUpon>AddOemToCarCategoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CategoryPage.xaml.cs">
+      <DependentUpon>CategoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChooseCarPage.xaml.cs">
+      <DependentUpon>ChooseCarPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NewCategoryWindow.xaml.cs">
       <DependentUpon>NewCategoryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
+    <Compile Include="View\ProductsShowPage.xaml.cs">
+      <DependentUpon>ProductsShowPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Resources\Class1.cs" />
+    <Compile Include="View\Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
-    <Page Include="AddCarWindow.xaml">
+    <Page Include="View\AddNewCarPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\AddOemToCarCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChooseCarPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -116,11 +146,19 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\RelayCommand.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CategoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NewCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProductsShowPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,7 +166,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Window1.xaml">
+    <Page Include="View\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

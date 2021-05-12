@@ -1,5 +1,4 @@
 ﻿using AutoPartsStore.Model;
-using AutoPartsStore.Model;
 using AutoPartsStore.ViewModel;
 using System;
 using System.Collections.Generic;

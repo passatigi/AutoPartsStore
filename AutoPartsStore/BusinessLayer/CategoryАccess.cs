@@ -42,6 +42,8 @@ namespace AutoPartsStore.BusinessLayer
             }
             UpdateCategoryInfo();
         } 
+
+
         public void UpdateCategoryInfo()
         {
             categories = db.Categories.ToList();

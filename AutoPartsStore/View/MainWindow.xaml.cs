@@ -35,5 +35,15 @@ namespace AutoPartsStore
             AutoPartsStoreContext.GetStoreContext().Dispose();
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //NewCarButtonText
+            //if (AddCarButton.Content.Equals())
+            //AddCarButton.Content = "Вернуться к продуктам"
+            //if ()
+            ProductOrAddCar.Source = new Uri("AddNewCarPage.xaml", UriKind.Relative);
+
+        }
     }
 }

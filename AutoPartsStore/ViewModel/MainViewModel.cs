@@ -15,6 +15,8 @@ namespace AutoPartsStore.ViewModel
         public NewCategoryViewModel NewCategoryViewModel { get; set; }
         public ProductViewModel ProductViewModel { get; set; }
         public NewCarViewModel NewCarViewModel { get; set; }
+
+        public ChooseCarViewModel ChooseCarViewModel { get; set; }
         public static MainViewModel GetMainViewModel()
         {
             if (mainViewModel == null)
@@ -26,6 +28,11 @@ namespace AutoPartsStore.ViewModel
                 }
             }
             return mainViewModel;
+        }
+
+        public void AddCarPartOemNumberIntoCategory(int categoryId)
+        {
+
         }
     }
 }

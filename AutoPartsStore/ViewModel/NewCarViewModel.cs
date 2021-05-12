@@ -401,7 +401,7 @@ namespace AutoPartsStore.ViewModel
             vehicleModificationModelCodes.Clear();
             vehicleModificationReleaseStarts.Clear();
             vehicleModificationReleaseEnds.Clear(); 
-            foreach (VehicleModification vehicleModification in vehicleAccess.GetAllVehicleBrandMofications(selectedVehicleBrand))
+            foreach (VehicleModification vehicleModification in vehicleAccess.GetAllVehicleBrandModifications(selectedVehicleBrand))
             {
                 vehicleModifications.Add(vehicleModification);
                 vehicleModificationModels.Add(vehicleModification.Model);
@@ -425,7 +425,7 @@ namespace AutoPartsStore.ViewModel
             vehicleEngineReleaseStarts.Clear();
             vehicleEngineReleaseEnds.Clear();
             if (selectedVehicleModification != null) {
-            foreach (VehicleEngine vehicleEngine in vehicleAccess.GetAllVehicleModificationEngines(selectedVehicleModification))
+            foreach (VehicleEngine vehicleEngine in vehicleAccess.GetAllVehicleModelEngines(selectedVehicleModification))
             {
                 vehicleEngines.Add(vehicleEngine);
                 vehicleEngineVolumes.Add(vehicleEngine.Power);

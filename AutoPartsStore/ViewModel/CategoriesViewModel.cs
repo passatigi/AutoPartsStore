@@ -16,7 +16,7 @@ using System.Runtime.CompilerServices;
 
 namespace AutoPartsStore.ViewModel
 {
-    class CategoriesViewModel : INotifyPropertyChanged
+    class CategoriesViewModel : BaseViewModel
     {
         
         private string inputCategoryString;
@@ -32,7 +32,24 @@ namespace AutoPartsStore.ViewModel
                 NotifyPropertyChanged("InputCategoryString");
             }
         }
+        #region commands
+        private RelayCommand addCategoryOemNumberCommand;
+        public RelayCommand AddCategoryOemNumberCommand
+        {
+            get
+            {
+                return addCategoryOemNumberCommand ?? (addCategoryOemNumberCommand = new RelayCommand(action =>
+                {
+                    MessageBox.Show(((int)action).ToString());
+                    //ProductViewModel.ProductViewModelObject.
 
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+        
         private RelayCommand findCommand;
         public RelayCommand FindCommand
         {
@@ -87,7 +104,25 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
-        
+        private RelayCommand addWithCategoryCommand;
+        public RelayCommand AddWithCategoryCommand
+        {
+            get
+            {
+                return addWithCategoryCommand ?? (addWithCategoryCommand = new RelayCommand(action =>
+                {
+                    //MessageBox.Show((in)action + "добавить с");
+                    NewCategoryWindow newCategoryWindow = new NewCategoryWindow();
+                    newCategoryWindow.Show();
+                    Category parent = categoryАccess.GetCategoryById((int)action).ParentCategory;
+                    mainViewModel.NewCategoryViewModel.Category = new Category(parent, "");
+                }, func =>
+                {
+                    return true;
+                }));
+            }
+        }
+
 
         private RelayCommand renameCategoryCommand;
         public RelayCommand RenameCategoryCommand
@@ -108,25 +143,7 @@ namespace AutoPartsStore.ViewModel
             }
         }
 
-        private RelayCommand addWithCategoryCommand;
-        public RelayCommand AddWithCategoryCommand
-        {
-            get
-            {
-                return addWithCategoryCommand ?? (addWithCategoryCommand = new RelayCommand(action =>
-                {
-                    //MessageBox.Show((in)action + "добавить с");
-                    NewCategoryWindow newCategoryWindow = new NewCategoryWindow();
-                    newCategoryWindow.Show();
-                    Category parent = categoryАccess.GetCategoryById((int)action).ParentCategory;
-                    mainViewModel.NewCategoryViewModel.Category = new Category(parent, "");
-                }, func =>
-                {
-                    return true;
-                }));
-            }
-        }
-
+       
         private RelayCommand deleteCategoryCommand;
         public RelayCommand DeleteCategoryCommand
         {
@@ -143,16 +160,8 @@ namespace AutoPartsStore.ViewModel
                 }));
             }
         }
+        #endregion
 
-        protected virtual bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Equals(storage, value)) return false;
-
-            storage = value;
-            NotifyPropertyChanged(propertyName);
-
-            return true;
-        }
 
         private Category mainCategoryNode;
         public Category MainCategoryNode
@@ -183,13 +192,6 @@ namespace AutoPartsStore.ViewModel
 
        
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+
     }
 }

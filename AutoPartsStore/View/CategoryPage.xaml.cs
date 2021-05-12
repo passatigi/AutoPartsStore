@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoPartsStore
+namespace AutoPartsStore.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddCarWindow.xaml
+    /// Логика взаимодействия для CategoryPage.xaml
     /// </summary>
-    public partial class AddCarWindow : Window
+    public partial class CategoryPage : Page
     {
-        public AddCarWindow()
+        public CategoryPage()
         {
             InitializeComponent();
         }
-
-
     }
 }
